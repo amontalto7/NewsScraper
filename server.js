@@ -8,9 +8,6 @@ const mongoose = require("mongoose");
 const axios = require("axios");
 const cheerio = require("cheerio");
 
-// Require all models
-const db = require("./models");
-
 let PORT = process.env.PORT || 3000;
 
 // Initialize Express
