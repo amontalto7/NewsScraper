@@ -41,11 +41,9 @@ $.getJSON("/articles", function(data) {
 
 $(document).on("click", ".btnScrape", function() {
   event.preventDefault();
-  let section = $("#section")
+  var section = $("#section")
     .val()
     .trim();
-
-  alert(section);
 
   console.log($);
 
@@ -54,5 +52,20 @@ $(document).on("click", ".btnScrape", function() {
     url: "/scrape/" + section
   }).then(function(data) {
     console.log(data);
+  });
+});
+
+// Click handler for delete buttons
+$(document).on("click", ".delete-this", function() {
+  event.preventDefault();
+
+  var id = $(this).attr("data-id");
+
+  $.ajax({
+    method: "DELETE",
+    url: "/articles/" + id
+  }).then(function(data) {
+    console.log(data);
+    // TODO: Refresh articles on page
   });
 });

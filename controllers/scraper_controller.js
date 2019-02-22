@@ -114,5 +114,19 @@ router.get("/notes", function(req, res) {
     });
 });
 
+// Route for deleting an Article from the db
+router.delete("/articles/:id", function(req, res) {
+  db.Article.deleteOne({ _id: req.params.id })
+    .then(function(dbArticle) {
+      // If any Articles are found, send them to the client
+      console.log("DELETED-------------------");
+      console.log(dbArticle);
+    })
+    .catch(function(err) {
+      // If an error occurs, send it back to the client
+      res.json(err);
+    });
+});
+
 // Export routes for server.js to use.
 module.exports = router;
