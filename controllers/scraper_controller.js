@@ -81,5 +81,24 @@ router.get("/articles", function(req, res) {
     });
 });
 
+// Route for grabbing a specific Article by id, populate it with it's note
+router.get("/articles/:id", function(req, res) {
+  // TODO
+  // ====
+  // Finish the route so it finds one article using the req.params.id,
+  // and run the populate method with "note",
+  // then responds with the article with the note included
+  db.Article.findOne({ _id: req.params.id })
+    .populate("note")
+    .then(function(dbArticle) {
+      // If any Articles are found, send them to the client
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
+      // If an error occurs, send it back to the client
+      res.json(err);
+    });
+});
+
 // Export routes for server.js to use.
 module.exports = router;
