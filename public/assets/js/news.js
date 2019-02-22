@@ -16,7 +16,7 @@ $.getJSON("/articles", function(data) {
     articleBody.append(aHeadline, aUrl, aSummary);
 
     articleBody.append(
-      '<a href="#" class="btn btn-outline-primary float-right">Notes</a>'
+      '<a href="#" class="btn btn-outline-primary float-right notes-button">Notes</a>'
     );
 
     articleCard.append(articleBody);
