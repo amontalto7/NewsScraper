@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Mongo Scraper</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,36 +13,40 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">Saved Articles</a>
             </li>
+            <li>
+
+                <form class="form-inline ml-5">
+                    <div class="form-group">
+                        <label class="mr-sm-2 sr-only" for="section">Preference</label>
+                        <select class="custom-select mr-md-2" id="section">
+                            {{!-- <option >Choose...</option> --}}
+                            <option selected value="world">World</option>
+                            <option value="us">U.S.</option>
+                            <option value="politics">Politics</option>
+                            <option value="nyregion">N.Y.</option>
+                            <option value="business">Business</option>
+                            <option value="opinion">Opinion</option>
+                            <option value="technology">Tech</option>
+                            <option value="science">Science</option>
+                            <option value="sports">Sports</option>
+                            <option value="arts">Arts</option>
+                            <option value="books">Books</option>
+                            <option value="style">Style</option>
+                            <option value="food">Food</option>
+                            <option value="Travel">Travel</option>
+                            <option value="magazine">Magazine</option>
+                            <option value="t-magazine">T Magazine</option>
+                            <option value="realestate">Real Estate</option>
+                            <option value="video">Video</option>
+
+                        </select>
+                        <button class="btn btn-success my-2 my-sm-0 mr-sm-2 btnScrape" type="submit">SCRAPE</button>
+                        <button class="btn btn-danger my-2 my-sm-0" type="submit">Clear Articles</button>
+                    </div>
+                </form>
+            </li>
         </ul>
 
-        <form class="form-inline">
-            <div class="form-group">
-                <label class="mr-sm-2 sr-only" for="section">Preference</label>
-                <select class="custom-select mr-sm-2" id="section">
-                    {{!-- <option >Choose...</option> --}}
-                    <option selected value="world">World</option>
-                    <option value="us">U.S.</option>
-                    <option value="politics">Politics</option>
-                    <option value="nyregion">N.Y.</option>
-                    <option value="business">Business</option>
-                    <option value="opinion">Opinion</option>
-                    <option value="technology">Tech</option>
-                    <option value="science">Science</option>
-                    <option value="sports">Sports</option>
-                    <option value="arts">Arts</option>
-                    <option value="books">Books</option>
-                    <option value="style">Style</option>
-                    <option value="food">Food</option>
-                    <option value="Travel">Travel</option>
-                    <option value="magazine">Magazine</option>
-                    <option value="t-magazine">T Magazine</option>
-                    <option value="realestate">Real Estate</option>
-                    <option value="video">Video</option>
 
-                </select>
-                <button class="btn btn-success my-2 my-sm-0 btnScrape" type="submit">SCRAPE</button>
-                <button class="btn btn-danger my-2 my-sm-0" type="submit">Clear Articles</button>
-            </div>
-        </form>
     </div>
 </nav>
