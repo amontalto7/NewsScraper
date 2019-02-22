@@ -16,12 +16,22 @@ $.getJSON("/articles", function(data) {
     articleBody.append(aHeadline, aUrl, aSummary);
 
     var notesBtn = $("<a>");
-    notesBtn.addClass("btn btn-outline-primary float-right notes-button");
+    notesBtn.addClass("btn btn-outline-primary float-left notes-button");
     notesBtn.attr("data-id", data[i]._id);
     notesBtn.text("Notes");
     notesBtn.attr("href", "#");
 
-    articleBody.append(notesBtn);
+    // var deleteIcon = $("<i>").addClass("material-icons");
+    // deleteIcon.text("delete_forever");
+
+    var deleteBtn = $("<a>");
+    deleteBtn.addClass("btn btn-danger float-right align-top delete-this");
+    deleteBtn.attr("data-id", data[i]._id);
+    deleteBtn.attr("href", "#");
+    // deleteBtn.append(deleteIcon);
+    deleteBtn.text("X");
+
+    articleBody.append(notesBtn, deleteBtn);
 
     articleCard.append(articleBody);
 
