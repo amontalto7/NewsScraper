@@ -67,5 +67,19 @@ router.get("/scrape/:section", function(req, res) {
     });
 });
 
+// Route for getting all Articles from the db
+router.get("/articles", function(req, res) {
+  // TODO: Finish the route so it grabs all of the articles
+  db.Article.find({})
+    .then(function(dbArticle) {
+      // If any Articles are found, send them to the client
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
+      // If an error occurs, send it back to the client
+      res.json(err);
+    });
+});
+
 // Export routes for server.js to use.
 module.exports = router;
