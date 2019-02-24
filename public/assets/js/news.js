@@ -1,7 +1,25 @@
 $(document).ready(function() {
   $(document).on("click", ".btn.save", handleArticleSave);
-  // $(document).on("click", ".btnScrape", handleArticleScrape);
+  $(document).on("click", ".btnScrape", scrapeArticles);
   $(".clear").on("click", handleArticleClear);
+
+  // $(document).on("click", ".btnScrape", function() );
+
+  function scrapeArticles() {
+    event.preventDefault();
+    var section = $("#section")
+      .val()
+      .trim();
+
+    console.log($);
+
+    $.ajax({
+      method: "GET",
+      url: "/scrape/" + section
+    }).then(function(data) {
+      console.log(data);
+    });
+  }
 
   // /articles/state/:saved
   function handleArticleSave() {
@@ -89,22 +107,6 @@ $(document).ready(function() {
 
       $("#articles").append(card);
     }
-  });
-
-  $(document).on("click", ".btnScrape", function() {
-    event.preventDefault();
-    var section = $("#section")
-      .val()
-      .trim();
-
-    console.log($);
-
-    $.ajax({
-      method: "GET",
-      url: "/scrape/" + section
-    }).then(function(data) {
-      console.log(data);
-    });
   });
 
   // Click handler for delete buttons
