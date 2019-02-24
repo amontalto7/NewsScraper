@@ -97,6 +97,21 @@ router.get("/articles/:id", function(req, res) {
     });
 });
 
+// Route to update saved state
+router.put("/api/articles/:id", function(req, res) {
+  //  it finds one article using the req.params.id and runs the populate method with "note",
+  // then responds with the article with the note included
+  db.Article.findOneAndUpdate({ _id: req.params.id }, { saved: req.saved })
+    .then(function(dbArticle) {
+      // If any Articles are found, send them to the client
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
+      // If an error occurs, send it back to the client
+      res.json(err);
+    });
+});
+
 // Route for retrieving all Notes from the db
 router.get("/notes", function(req, res) {
   // Find all Notes
@@ -115,7 +130,6 @@ router.get("/notes", function(req, res) {
 router.get("/articles/state/:saved", function(req, res) {
   // if paramater is "saved", set isSaved to true. Everything else gets set to false.
   var isSaved = req.params.saved === "saved" ? true : false;
-  console.log(isSaved);
 
   db.Article.find({ saved: isSaved })
     .populate("note")
