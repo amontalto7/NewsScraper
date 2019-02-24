@@ -159,10 +159,10 @@ router.delete("/articles/:id", function(req, res) {
 
 // Route for deleting all articles
 router.get("/api/clear", function(req, res) {
-  db.Article.deleteMany()
+  db.Article.deleteMany({ saved: false })
     .then(function(dbArticle) {
       // If any Articles are found, send them to the client
-      console.log("ALL DATA DELETED");
+      console.log(dbArticle.deletedCount + " unsaved articles deleted");
     })
     .catch(function(err) {
       // If an error occurs, send it back to the client
