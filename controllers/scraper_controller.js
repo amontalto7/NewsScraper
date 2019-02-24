@@ -14,12 +14,32 @@ const db = require("../models");
 // Create all our routes and set up logic within those routes where required.
 router.get("/", function(req, res) {
   var pageType = { main: true };
-  res.render("index", pageType);
+  res.render("index", { pageType });
 });
 
 router.get("/saved", function(req, res) {
-  var pageType = { main: false };
-  res.render("index", pageType);
+  // axios isn't calling the local route as defined, so i'm re-creating it by doing another db call instead
+  // axios.get("/articles/state/saved")
+  //   .then(function(response) {})
+  //   .catch(function(error) {
+  //   });
+  db.Article.find({ saved: true })
+    .populate("note")
+    .then(function(response) {
+      // If any Articles are found, send them to the client
+      // construct object to send to handlebars
+      var pageType = { main: false };
+      var savedData = { pageType, response };
+      console.log(savedData);
+      res.render("index", savedData);
+    })
+    .catch(function(error) {
+      // If an error occurs, send it back to the client
+      console.log(error);
+      // res.status(404).send("404 - Section not found");
+      let section = { section: req.params.section };
+      res.render("404", section);
+    });
 });
 
 // A GET route for scraping the echoJS website

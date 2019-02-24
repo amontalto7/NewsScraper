@@ -140,6 +140,7 @@ $(document).ready(function() {
   initPage();
 
   $(document).on("click", ".btn.save", handleArticleSave);
+  $(document).on("click", ".btn.save", handleArticleSave);
   $(document).on("click", ".btnScrape", scrapeArticles);
   $(".clear").on("click", handleArticleClear);
 

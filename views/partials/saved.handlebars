@@ -1,3 +1,21 @@
 <div id="savedArticles" class="container-fluid article-container">
-    SAVED
+    <h2>SAVED ARTICLES</h2>
+    {{#each response}}
+    <div class="card" data-id="{{_id}}">
+        <div class="card-header bg-warning text-dark">
+            <h5>
+                <a href="https://www.nytimes.com{{url}}" rel="noopener noreferrer" target="_blank">
+                    {{headline}}
+                </a>
+            </h5>
+            <a class="btn btn-danger ml-5 unsave text-light" href="#" data-id="{{_id}}">X</a>
+            <a class="btn btn-secondary mr-5 note text-light" href="#" data-id="{{_id}}">NOTES</a>
+        </div>
+        <div class="card-body">
+            <p>{{summary}}</p>
+
+        </div>
+    </div>
+
+    {{/each}}
 </div>

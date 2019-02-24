@@ -103,17 +103,23 @@ body {
     padding-bottom: 30px;
   }
   
-  a:link, a:visited {
+  #articles a:link, #articles a:visited {
     text-decoration: none;
     color: white;
   }
-  
+
+  #savedArticles a:link, #savedArticles a:visited {
+    text-decoration: none;
+    color: #808000;
+  }
+
+
   a:hover, a:active {
     text-decoration: underline;
   }  
 
   .card .card-header h3 {
-    color: white!important;
+    color: white;
   }
 
 
