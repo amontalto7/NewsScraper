@@ -13,7 +13,13 @@ const db = require("../models");
 
 // Create all our routes and set up logic within those routes where required.
 router.get("/", function(req, res) {
-  res.render("index");
+  var pageType = { main: true };
+  res.render("index", pageType);
+});
+
+router.get("/saved", function(req, res) {
+  var pageType = { main: false };
+  res.render("index", pageType);
 });
 
 // A GET route for scraping the echoJS website
