@@ -83,10 +83,7 @@ router.get("/articles", function(req, res) {
 
 // Route for grabbing a specific Article by id, populate it with it's note
 router.get("/articles/:id", function(req, res) {
-  // TODO
-  // ====
-  // Finish the route so it finds one article using the req.params.id,
-  // and run the populate method with "note",
+  //  it finds one article using the req.params.id and runs the populate method with "note",
   // then responds with the article with the note included
   db.Article.findOne({ _id: req.params.id })
     .populate("note")
@@ -114,6 +111,24 @@ router.get("/notes", function(req, res) {
     });
 });
 
+// Route for grabbing articles by saved state
+router.get("/articles/state/:saved", function(req, res) {
+  // if paramater is "saved", set isSaved to true. Everything else gets set to false.
+  var isSaved = req.params.saved === "saved" ? true : false;
+  console.log(isSaved);
+
+  db.Article.find({ saved: isSaved })
+    .populate("note")
+    .then(function(dbArticle) {
+      // If any Articles are found, send them to the client
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
+      // If an error occurs, send it back to the client
+      res.json(err);
+    });
+});
+
 // Route for deleting a single Article from the db
 router.delete("/articles/:id", function(req, res) {
   db.Article.deleteOne({ _id: req.params.id })
@@ -129,7 +144,7 @@ router.delete("/articles/:id", function(req, res) {
 });
 
 // Route for deleting all articles
-router.delete("/articles", function(req, res) {
+router.get("/api/clear", function(req, res) {
   db.Article.deleteMany()
     .then(function(dbArticle) {
       // If any Articles are found, send them to the client
