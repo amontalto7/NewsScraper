@@ -95,10 +95,20 @@ body {
     padding-bottom: 30px;
   }
   
-  .card .card-header h3 {
+  a:link, a:visited {
+    text-decoration: none;
     color: white;
   }
   
+  a:hover, a:active {
+    text-decoration: underline;
+  }  
+
+  .card .card-header h3 {
+    color: white!important;
+  }
+
+
   .card .card-header .btn {
     position: absolute;
     top: 20px;
