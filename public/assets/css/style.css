@@ -113,7 +113,7 @@ body {
     color: #808000;
   }
 
-  a:hover, a:active {
+ .card a:hover, .card a:active {
     text-decoration: underline!important;
   }  
 
