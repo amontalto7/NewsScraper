@@ -142,11 +142,12 @@ function handleArticleNotes(event) {
   var currentArticle = $(this)
     .parents(".card")
     .data();
+
   // Grab any notes with this headline/article id
-  $.get("/api/notes/" + currentArticle._id).then(function(data) {
+  $.get("/api/notes/" + currentArticle.id).then(function(data) {
     // Constructing our initial HTML to add to the notes modal
     var modalText = $("<div class='container-fluid text-center'>").append(
-      $("<h4>").text("Notes For Article: " + currentArticle._id),
+      $("<h4>").text("Notes For Article: " + currentArticle.id),
       $("<hr>"),
       $("<ul class='list-group note-container'>"),
       $("<textarea placeholder='New Note' rows='4' cols='60'>"),
@@ -158,7 +159,7 @@ function handleArticleNotes(event) {
       closeButton: true
     });
     var noteData = {
-      _id: currentArticle._id,
+      _id: currentArticle.id,
       notes: data || []
     };
     // Adding some information about the article and article notes to the save button for easy access

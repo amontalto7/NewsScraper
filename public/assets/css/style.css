@@ -8,9 +8,9 @@ body {
   background-image: url("../images/paper.png");
 }
 
-/* .card a:not([href]):not([tabindex]).scrape-new {
+.card a:not([href]):not([tabindex]).scrape-new {
     color: #2196F3;
-  } */
+  }
 
 .footer {
   position: absolute;
@@ -113,9 +113,8 @@ body {
     color: #808000;
   }
 
-
   a:hover, a:active {
-    text-decoration: underline;
+    text-decoration: underline!important;
   }  
 
   .card .card-header h3 {
@@ -172,7 +171,7 @@ body {
     margin: 5px;
   }
   
-  /* .note.list-group-item .btn {
+  .note.list-group-item .btn {
     position: relative;
     bottom: 10px;
-  } */
+  }
