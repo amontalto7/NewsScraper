@@ -1,3 +1,4 @@
+/* global bootbox */
 // Function to handle article scraping
 function scrapeArticles() {
   event.preventDefault();
@@ -134,6 +135,69 @@ function handleArticleClear() {
   });
 }
 
+function handleArticleNotes(event) {
+  // This function handles opening the notes modal and displaying our notes
+  // We grab the id of the article to get notes for from the card element the delete button sits inside
+  event.preventDefault();
+  var currentArticle = $(this)
+    .parents(".card")
+    .data();
+  // Grab any notes with this headline/article id
+  $.get("/api/notes/" + currentArticle._id).then(function(data) {
+    // Constructing our initial HTML to add to the notes modal
+    var modalText = $("<div class='container-fluid text-center'>").append(
+      $("<h4>").text("Notes For Article: " + currentArticle._id),
+      $("<hr>"),
+      $("<ul class='list-group note-container'>"),
+      $("<textarea placeholder='New Note' rows='4' cols='60'>"),
+      $("<button class='btn btn-success save'>Save Note</button>")
+    );
+    // Adding the formatted HTML to the note modal
+    bootbox.dialog({
+      message: modalText,
+      closeButton: true
+    });
+    var noteData = {
+      _id: currentArticle._id,
+      notes: data || []
+    };
+    // Adding some information about the article and article notes to the save button for easy access
+    // When trying to add a new note
+    $(".btn.save").data("article", noteData);
+    // renderNotesList will populate the actual note HTML inside of the modal we just created/opened
+    renderNotesList(noteData);
+  });
+}
+
+function renderNotesList(data) {
+  // This function handles rendering note list items to our notes modal
+  // Setting up an array of notes to render after finished
+  // Also setting up a currentNote variable to temporarily store each note
+  var notesToRender = [];
+  var currentNote;
+  if (!data.notes.length) {
+    // If we have no notes, just display a message explaining this
+    currentNote = $(
+      "<li class='list-group-item'>No notes for this article yet.</li>"
+    );
+    notesToRender.push(currentNote);
+  } else {
+    // If we do have notes, go through each one
+    for (var i = 0; i < data.notes.length; i++) {
+      // Constructs an li element to contain our noteText and a delete button
+      currentNote = $("<li class='list-group-item note'>")
+        .text(data.notes[i].noteText)
+        .append($("<button class='btn btn-danger note-delete'>x</button>"));
+      // Store the note id on the delete button for easy access when trying to delete
+      currentNote.children("button").data("_id", data.notes[i]._id);
+      // Adding our currentNote to the notesToRender array
+      notesToRender.push(currentNote);
+    }
+  }
+  // Now append the notesToRender to the note-container inside the note modal
+  $(".note-container").append(notesToRender);
+}
+
 // -------------------------------------- MAIN LOGIC ------------------------------- //
 $(document).ready(function() {
   // on page load, run the initPage function
@@ -142,6 +206,8 @@ $(document).ready(function() {
   $(document).on("click", ".btn.save", handleArticleSave);
   $(document).on("click", ".btn.save", handleArticleSave);
   $(document).on("click", ".btnScrape", scrapeArticles);
+  $(document).on("click", ".notes", handleArticleNotes);
+
   $(".clear").on("click", handleArticleClear);
 
   // $(document).on("click", ".btnScrape", function() );
