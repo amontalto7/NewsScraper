@@ -123,7 +123,7 @@ router.put("/api/articles/:id", function(req, res) {
 });
 
 // Route for retrieving all Notes from the db
-router.get("api/notes", function(req, res) {
+router.get("/api/notes", function(req, res) {
   // Find all Notes
   db.Note.find({})
     .then(function(dbNote) {
