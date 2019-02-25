@@ -113,9 +113,9 @@ body {
     color: #808000;
   }
 
- .card a:hover, .card a:active {
+ /* .card a:hover, .card a:active {
     text-decoration: underline!important;
-  }  
+  }   */
 
   .card .card-header h3 {
     color: white;

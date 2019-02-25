@@ -151,7 +151,7 @@ function handleArticleNotes(event) {
       $("<hr>"),
       $("<ul class='list-group note-container'>"),
       $("<textarea placeholder='New Note' rows='4' cols='60'>"),
-      $("<button class='btn btn-success save'>Save Note</button>")
+      $("<button class='btn btn-success saveNote'>Save Note</button>")
     );
     // Adding the formatted HTML to the note modal
     bootbox.dialog({
@@ -164,7 +164,7 @@ function handleArticleNotes(event) {
     };
     // Adding some information about the article and article notes to the save button for easy access
     // When trying to add a new note
-    $(".btn.save").data("article", noteData);
+    $(".btn.saveNote").data("article", noteData);
     // renderNotesList will populate the actual note HTML inside of the modal we just created/opened
     renderNotesList(noteData);
   });
@@ -199,6 +199,26 @@ function renderNotesList(data) {
   $(".note-container").append(notesToRender);
 }
 
+function handleNoteSave() {
+  // This function handles what happens when a user tries to save a new note for an article
+  // Setting a variable to hold some formatted data about our note,
+  // grabbing the note typed into the input box
+  var noteData;
+  var newNote = $(".bootbox-body textarea")
+    .val()
+    .trim();
+  // If we actually have data typed into the note input field, format it
+  // and post it to the "/api/notes" route and send the formatted noteData as well
+  if (newNote) {
+    console.log($(this));
+    noteData = { _headlineId: $(this).data("article")._id, noteText: newNote };
+    $.post("/api/notes", noteData).then(function() {
+      // When complete, close the modal
+      bootbox.hideAll();
+    });
+  }
+}
+
 // -------------------------------------- MAIN LOGIC ------------------------------- //
 $(document).ready(function() {
   // on page load, run the initPage function
@@ -208,6 +228,7 @@ $(document).ready(function() {
   $(document).on("click", ".btn.save", handleArticleSave);
   $(document).on("click", ".btnScrape", scrapeArticles);
   $(document).on("click", ".notes", handleArticleNotes);
+  $(document).on("click", ".btn.saveNote", handleNoteSave);
 
   $(".clear").on("click", handleArticleClear);
 

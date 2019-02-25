@@ -168,6 +168,30 @@ router.get("/articles/state/:saved", function(req, res) {
     });
 });
 
+// Route for saving a new Note to the db and associating it with an Article
+// router.post("/articles/:id", function(req, res) {
+router.post("/api/notes", function(req, res) {
+  // save the new note that gets posted to the Notes collection
+  // then find an article from the req.params.id
+  // and update it's "note" property with the _id of the new note
+  db.Note.create(req.body)
+    .then(function(dbNote) {
+      return db.Article.findOneAndUpdate(
+        { _id: req._headlineId },
+        { $push: { notes: dbNote._id } },
+        { new: true }
+      );
+    })
+    .then(function(dbArticle) {
+      // if the Article was updated successfully, send it back to the client
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
+      // If an error occurs, send it back to the client
+      res.json(err);
+    });
+});
+
 // Route for deleting a single Article from the db
 router.delete("/articles/:id", function(req, res) {
   db.Article.deleteOne({ _id: req.params.id })
