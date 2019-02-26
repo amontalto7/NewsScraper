@@ -214,6 +214,7 @@ router.get("/api/clear", function(req, res) {
     .then(function(dbArticle) {
       // If any Articles are found, send them to the client
       console.log(dbArticle.deletedCount + " unsaved articles deleted");
+      res.sendStatus(204);
     })
     .catch(function(err) {
       // If an error occurs, send it back to the client
