@@ -221,6 +221,25 @@ function handleNoteSave() {
   }
 }
 
+function deleteThis() {
+  event.preventDefault();
+
+  var id = $(this).attr("data-id");
+
+  console.log("about to delete");
+  $.ajax({
+    method: "DELETE",
+    url: "/articles/" + id
+  }).complete(function(data) {
+    console.log(data);
+    console.log($(this));
+    // Remove card from page
+    $(this)
+      .parents(".card")
+      .remove();
+  });
+}
+
 // -------------------------------------- MAIN LOGIC ------------------------------- //
 $(document).ready(function() {
   // on page load, run the initPage function
@@ -239,17 +258,5 @@ $(document).ready(function() {
   // /articles/state/:saved
 
   // Click handler for delete buttons
-  $(document).on("click", ".delete-this", function() {
-    event.preventDefault();
-
-    var id = $(this).attr("data-id");
-
-    $.ajax({
-      method: "DELETE",
-      url: "/articles/" + id
-    }).then(function(data) {
-      console.log(data);
-      // TODO: Refresh articles on page
-    });
-  });
+  $(document).on("click", ".delete-this", deleteThis);
 });
