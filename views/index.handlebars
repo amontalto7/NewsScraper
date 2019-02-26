@@ -1,8 +1,8 @@
 {{> header}}
 
-{{> jumbotron}}
-
-<div class="maincontent">
+<div id="loader"></div>
+<div style="display:none" ; id="main-content" class="animate-bottom">
+    {{> jumbotron}}
 
     {{#if pageType.main}}
     {{> articles}}

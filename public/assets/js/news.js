@@ -25,6 +25,9 @@ function initPage() {
   $.getJSON("/articles/state/unsaved", function(data) {
     // if we have data, display the articles
     $("#articles").empty();
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("main-content").style.display = "block";
+
     if (data && data.length) {
       // For each one
       for (var i = 0; i < data.length; i++) {
