@@ -1,3 +1,4 @@
+/* ----------- define animations for loader */
 #loader {
   position: absolute;
   left: 50%;
@@ -43,7 +44,7 @@
   from{ bottom:0; opacity: 1}
 }
 
-
+/* --------------- end loader */
 
 html {
   position: relative;
