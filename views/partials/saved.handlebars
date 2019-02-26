@@ -8,8 +8,16 @@
                     {{headline}}
                 </a>
             </h5>
-            <a class="btn btn-secondary mr-5 notes text-light" href="#" data-id="{{_id}}">NOTES</a>
-            <a class="btn btn-danger ml-5 unsave text-light" href="#" data-id="{{_id}}">X</a>
+            <a class="btn btn-secondary mr-5 notes text-light" href="#" data-id="{{_id}}">
+                <i class="material-icons">
+                    notes
+                </i> NOTES
+            </a>
+            <a class="btn btn-danger ml-5 unsave text-light" href="#" data-id="{{_id}}">
+                <i class="material-icons">
+                    remove_circle_outline
+                </i>
+            </a>
         </div>
         <div class="card-body">
             <p>{{summary}}</p>

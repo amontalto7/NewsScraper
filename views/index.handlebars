@@ -2,10 +2,13 @@
 
 {{> jumbotron}}
 
-{{#if pageType.main}}
-{{> articles}}
-{{else}}
-{{> saved}}
-{{/if}}
+<div class="maincontent">
 
+    {{#if pageType.main}}
+    {{> articles}}
+    {{else}}
+    {{> saved}}
+    {{/if}}
+
+</div>
 {{> footer}}
