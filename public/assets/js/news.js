@@ -33,7 +33,6 @@ function initPage() {
 
         var saveBtn = $("<a>");
         saveBtn.addClass("btn btn-success mr-5 save");
-        saveBtn.attr("data-id", data[i]._id);
         saveBtn.text("SAVE ARTICLE");
         saveBtn.attr("href", "#");
 
@@ -67,7 +66,8 @@ function initPage() {
         articleBody.append(aSummary);
 
         card.append(articleHeader, articleBody);
-        card.data("_id", data[i]._id);
+        card.data("id", data[i]._id);
+        card.data("saved", true);
 
         $("#articles").append(card);
       }
@@ -106,23 +106,25 @@ function handleArticleSave() {
     .parents(".card")
     .data();
 
+  console.log(articleToSave);
+
   // Remove card from page
   $(this)
     .parents(".card")
     .remove();
 
-  articleToSave.saved = true;
+  // articleToSave.saved = true;
   // Using a patch method to be semantic since this is an update to an existing record in our collection
   $.ajax({
     method: "PUT",
-    url: "/api/articles/" + articleToSave._id,
+    url: "/api/articles/" + articleToSave.id,
     data: articleToSave
   }).then(function(data) {
     // If the data was saved successfully
     if (data.saved) {
       // Run the initPage function again. This will reload the entire list of articles
       // initPage();
-      console.log("article saved");
+      console.log("article updated");
     }
   });
 }
@@ -225,7 +227,7 @@ $(document).ready(function() {
   initPage();
 
   $(document).on("click", ".btn.save", handleArticleSave);
-  $(document).on("click", ".btn.save", handleArticleSave);
+  $(document).on("click", ".btn.unsave", handleArticleSave);
   $(document).on("click", ".btnScrape", scrapeArticles);
   $(document).on("click", ".notes", handleArticleNotes);
   $(document).on("click", ".btn.saveNote", handleNoteSave);

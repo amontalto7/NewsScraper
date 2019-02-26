@@ -111,6 +111,7 @@ router.get("/articles", function(req, res) {
 router.put("/api/articles/:id", function(req, res) {
   //  it finds one article using the req.params.id and runs the populate method with "note",
   // then responds with the article with the note included
+
   db.Article.findOneAndUpdate({ _id: req.params.id }, { saved: req.body.saved })
     .then(function(dbArticle) {
       // If any Articles are found, send them to the client
