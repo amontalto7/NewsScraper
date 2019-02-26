@@ -226,17 +226,15 @@ function deleteThis() {
 
   var id = $(this).attr("data-id");
 
-  console.log("about to delete");
+  // Remove card from page
+  var thisCard = $(this).parents(".card");
+
   $.ajax({
     method: "DELETE",
     url: "/articles/" + id
-  }).complete(function(data) {
-    console.log(data);
+  }).then(function() {
     console.log($(this));
-    // Remove card from page
-    $(this)
-      .parents(".card")
-      .remove();
+    thisCard.remove();
   });
 }
 

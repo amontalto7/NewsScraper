@@ -197,9 +197,10 @@ router.post("/api/notes", function(req, res) {
 router.delete("/articles/:id", function(req, res) {
   db.Article.deleteOne({ _id: req.params.id })
     .then(function(dbArticle) {
-      // If any Articles are found, send them to the client
       console.log("DELETED-------------------");
       console.log(dbArticle);
+      // `204` is the code for a successful response where no data is expected - an empty response
+      res.sendStatus(204);
     })
     .catch(function(err) {
       // If an error occurs, send it back to the client
