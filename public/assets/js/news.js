@@ -11,13 +11,13 @@ function scrapeArticles() {
   $.ajax({
     method: "GET",
     url: "/scrape/" + section
-  })
-    .then(function(data) {
-      console.log(data);
-    })
-    .then(function(data) {
-      initPage();
-    });
+  }).then(function(data) {
+    console.log(data);
+    // display css loader
+    document.getElementById("main-content").style.display = "none";
+    document.getElementById("loader").style.display = "block";
+    initPage();
+  });
 }
 
 function initPage() {

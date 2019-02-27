@@ -172,6 +172,8 @@ router.get("/articles/state/:saved", function(req, res) {
   var isSaved = req.params.saved === "saved" ? true : false;
 
   db.Article.find({ saved: isSaved })
+    .sort({ dateAdded: -1 })
+    // .limit(5)
     .populate("note")
     .then(function(dbArticle) {
       // If any Articles are found, send them to the client
