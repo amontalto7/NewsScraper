@@ -194,11 +194,12 @@ router.post("/api/notes", function(req, res) {
   // console.log(req.body);
   db.Note.create(req.body)
     .then(function(dbNote) {
-      // console.log(dbNote);
+      console.log(dbNote);
+      // Documentation says to use 'returnNewDocument', but this didn't work so using new:true
       return db.Article.findOneAndUpdate(
-        { _id: req._headlineId },
+        { _id: req.body._headlineId },
         { $push: { notes: dbNote._id } },
-        { returnNewDocument: true }
+        { new: true }
       );
     })
     .then(function(dbArticle) {
