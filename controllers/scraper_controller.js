@@ -94,9 +94,23 @@ router.get("/scrape/:section", function(req, res) {
 });
 
 // Route for getting all Articles from the db
-router.get("/articles", function(req, res) {
+router.get("/api/articles", function(req, res) {
   // TODO: Finish the route so it grabs all of the articles
   db.Article.find({})
+    .then(function(dbArticle) {
+      // If any Articles are found, send them to the client
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
+      // If an error occurs, send it back to the client
+      res.json(err);
+    });
+});
+
+// Route for getting a single Article populated by note
+router.get("/api/articles/:id", function(req, res) {
+  // TODO: Finish the route so it grabs all of the articles
+  db.Article.find({ _id: req.params.id })
     .then(function(dbArticle) {
       // If any Articles are found, send them to the client
       res.json(dbArticle);
@@ -175,19 +189,23 @@ router.post("/api/notes", function(req, res) {
   // save the new note that gets posted to the Notes collection
   // then find an article from the req.params.id
   // and update it's "note" property with the _id of the new note
+  // console.log(req.body);
   db.Note.create(req.body)
     .then(function(dbNote) {
+      // console.log(dbNote);
       return db.Article.findOneAndUpdate(
         { _id: req._headlineId },
         { $push: { notes: dbNote._id } },
-        { new: true }
+        { returnNewDocument: true }
       );
     })
     .then(function(dbArticle) {
       // if the Article was updated successfully, send it back to the client
+      console.log(dbArticle);
       res.json(dbArticle);
     })
     .catch(function(err) {
+      console.log(err);
       // If an error occurs, send it back to the client
       res.json(err);
     });
