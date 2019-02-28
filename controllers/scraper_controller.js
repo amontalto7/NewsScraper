@@ -237,15 +237,16 @@ router.delete("/notes", function(req, res) {
   //TODO - Also remove article
   console.log(req.body);
   db.Note.deleteOne({ _id: req.body._id })
+    .then(function(dbNote) {
+      console.log("NOTE DELETED-------------------");
+      console.log(dbNote);
+    })
     .then(function() {
+      // ISSUE - Article is not being updated - reference to the note is still there
       db.Article.update(
         { _id: req.body.article_id },
         { $pull: { notes: req.body._id } }
       );
-    })
-    .then(function(dbNote) {
-      console.log("NOTE DELETED-------------------");
-      console.log(dbNote);
       // `204` is the code for a successful response where no data is expected - an empty response
       res.sendStatus(204);
     })

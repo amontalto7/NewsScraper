@@ -6,13 +6,13 @@ function scrapeArticles() {
     .val()
     .trim();
 
-  console.log($);
+  // console.log($);
 
   $.ajax({
     method: "GET",
     url: "/scrape/" + section
   }).then(function(data) {
-    console.log(data);
+    // console.log(data);
     // display css loader
     document.getElementById("main-content").style.display = "none";
     document.getElementById("loader").style.display = "block";
@@ -109,7 +109,7 @@ function handleArticleSave() {
     .parents(".card")
     .data();
 
-  console.log(articleToSave);
+  // console.log(articleToSave);
 
   // Remove card from page
   $(this)
@@ -124,9 +124,10 @@ function handleArticleSave() {
     data: articleToSave
   }).then(function(data) {
     // If the data was saved successfully
+    // ISSUE - this then block isn't getting run when saving articles. It only gets triggered when removing articles from saved state
     if (data.saved) {
       // Run the initPage function again. This will reload the entire list of articles
-      // initPage();
+      initPage();
       console.log("article updated");
     }
   });
@@ -151,7 +152,7 @@ function handleArticleNotes(event) {
   // Grab any notes with this headline/article id
   $.get("/api/notes/" + currentArticle.id).then(function(data) {
     // Constructing our initial HTML to add to the notes modal
-    console.log(data);
+    // console.log(data);
     var modalText = $("<div class='container-fluid text-center'>").append(
       $("<h4>").text("Notes For Article: " + currentArticle.id),
       $("<hr>"),
@@ -182,7 +183,7 @@ function renderNotesList(data) {
   // Also setting up a currentNote variable to temporarily store each note
   var notesToRender = [];
   var currentNote;
-  console.log(data);
+  // console.log(data);
   if (!data.notes.notes.length) {
     // If we have no notes, just display a message explaining this
     currentNote = $(
@@ -218,7 +219,7 @@ function handleNoteSave() {
   // If we actually have data typed into the note input field, format it
   // and post it to the "/api/notes" route and send the formatted noteData as well
   if (newNote) {
-    console.log($(this));
+    // console.log($(this));
     noteData = { _headlineId: $(this).data("article")._id, noteText: newNote };
     $.post("/api/notes", noteData).then(function() {
       // When complete, close the modal
