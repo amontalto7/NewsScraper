@@ -253,7 +253,8 @@ function deleteNote() {
 
   $.ajax({
     method: "DELETE",
-    url: "/notes/" + currentNote._id
+    url: "/notes",
+    data: currentNote
   }).then(function() {
     // Remove card from page
     thisNote.remove();

@@ -50,6 +50,8 @@ router.get("/scrape/:section", function(req, res) {
     .get("https://www.nytimes.com/section/" + req.params.section + "/")
     .then(function(response) {
       // Then, we load that into cheerio and save it to $ for a shorthand selector
+      // if ((response.data).length) > 0
+
       var $ = cheerio.load(response.data);
 
       // Now, we grab every h2 within an article tag, and do the following:
@@ -218,6 +220,7 @@ router.post("/api/notes", function(req, res) {
 router.delete("/articles/:id", function(req, res) {
   db.Article.deleteOne({ _id: req.params.id })
     .then(function(dbArticle) {
+      // TODO: Also delete associated notes
       console.log("DELETED-------------------");
       console.log(dbArticle);
       // `204` is the code for a successful response where no data is expected - an empty response
@@ -230,9 +233,16 @@ router.delete("/articles/:id", function(req, res) {
 });
 
 // Route for deleting a single Note from the db
-router.delete("/notes/:id", function(req, res) {
+router.delete("/notes", function(req, res) {
   //TODO - Also remove article
-  db.Note.deleteOne({ _id: req.params.id })
+  console.log(req.body);
+  db.Note.deleteOne({ _id: req.body._id })
+    .then(function() {
+      db.Article.update(
+        { _id: req.body.article_id },
+        { $pull: { notes: req.body._id } }
+      );
+    })
     .then(function(dbNote) {
       console.log("NOTE DELETED-------------------");
       console.log(dbNote);
