@@ -229,6 +229,22 @@ router.delete("/articles/:id", function(req, res) {
     });
 });
 
+// Route for deleting a single Note from the db
+router.delete("/notes/:id", function(req, res) {
+  //TODO - Also remove article
+  db.Note.deleteOne({ _id: req.params.id })
+    .then(function(dbNote) {
+      console.log("NOTE DELETED-------------------");
+      console.log(dbNote);
+      // `204` is the code for a successful response where no data is expected - an empty response
+      res.sendStatus(204);
+    })
+    .catch(function(err) {
+      // If an error occurs, send it back to the client
+      res.json(err);
+    });
+});
+
 // Route for deleting all articles
 router.get("/api/clear", function(req, res) {
   db.Article.deleteMany({ saved: false })

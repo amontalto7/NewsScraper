@@ -198,6 +198,7 @@ function renderNotesList(data) {
         .append($("<button class='btn btn-danger note-delete'>x</button>"));
       // Store the note id on the delete button for easy access when trying to delete
       currentNote.children("button").data("_id", data.notes.notes[i]._id);
+      currentNote.children("button").data("article_id", data._id);
       // Adding our currentNote to the notesToRender array
       notesToRender.push(currentNote);
     }
@@ -231,15 +232,31 @@ function deleteThis() {
 
   var id = $(this).attr("data-id");
 
-  // Remove card from page
   var thisCard = $(this).parents(".card");
 
   $.ajax({
     method: "DELETE",
     url: "/articles/" + id
   }).then(function() {
-    console.log($(this));
+    // Remove card from page
     thisCard.remove();
+  });
+}
+
+function deleteNote() {
+  // var id = $(this).data("_id");
+  var currentNote = $(this).data();
+
+  var thisNote = $(this).parents("li.note");
+
+  // alert(currentNote.article_id);
+
+  $.ajax({
+    method: "DELETE",
+    url: "/notes/" + currentNote._id
+  }).then(function() {
+    // Remove card from page
+    thisNote.remove();
   });
 }
 
@@ -253,6 +270,7 @@ $(document).ready(function() {
   $(document).on("click", ".btnScrape", scrapeArticles);
   $(document).on("click", ".notes", handleArticleNotes);
   $(document).on("click", ".btn.saveNote", handleNoteSave);
+  $(document).on("click", ".btn.note-delete", deleteNote);
 
   $(".clear").on("click", handleArticleClear);
 
