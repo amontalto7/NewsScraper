@@ -151,6 +151,7 @@ function handleArticleNotes(event) {
   // Grab any notes with this headline/article id
   $.get("/api/notes/" + currentArticle.id).then(function(data) {
     // Constructing our initial HTML to add to the notes modal
+    console.log(data);
     var modalText = $("<div class='container-fluid text-center'>").append(
       $("<h4>").text("Notes For Article: " + currentArticle.id),
       $("<hr>"),
@@ -181,7 +182,8 @@ function renderNotesList(data) {
   // Also setting up a currentNote variable to temporarily store each note
   var notesToRender = [];
   var currentNote;
-  if (!data.notes.length) {
+  console.log(data);
+  if (!data.notes.notes.length) {
     // If we have no notes, just display a message explaining this
     currentNote = $(
       "<li class='list-group-item'>No notes for this article yet.</li>"
@@ -189,13 +191,13 @@ function renderNotesList(data) {
     notesToRender.push(currentNote);
   } else {
     // If we do have notes, go through each one
-    for (var i = 0; i < data.notes.length; i++) {
+    for (var i = 0; i < data.notes.notes.length; i++) {
       // Constructs an li element to contain our noteText and a delete button
       currentNote = $("<li class='list-group-item note'>")
-        .text(data.notes[i].noteText)
+        .text(data.notes.notes[i].noteText)
         .append($("<button class='btn btn-danger note-delete'>x</button>"));
       // Store the note id on the delete button for easy access when trying to delete
-      currentNote.children("button").data("_id", data.notes[i]._id);
+      currentNote.children("button").data("_id", data.notes.notes[i]._id);
       // Adding our currentNote to the notesToRender array
       notesToRender.push(currentNote);
     }

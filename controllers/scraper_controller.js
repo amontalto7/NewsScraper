@@ -24,7 +24,7 @@ router.get("/saved", function(req, res) {
   //   .catch(function(error) {
   //   });
   db.Article.find({ saved: true })
-    .populate("note")
+    .populate("notes")
     .then(function(response) {
       // If any Articles are found, send them to the client
       // construct object to send to handlebars
@@ -155,7 +155,7 @@ router.get("/api/notes", function(req, res) {
 router.get("/api/notes/:articleId", function(req, res) {
   // Find all Notes
   db.Article.findOne({ _id: req.params.articleId })
-    .populate("note")
+    .populate("notes")
     .then(function(dbNotes) {
       // If all Notes are successfully found, send them back to the client
       res.json(dbNotes);
@@ -174,7 +174,7 @@ router.get("/articles/state/:saved", function(req, res) {
   db.Article.find({ saved: isSaved })
     .sort({ dateAdded: -1 })
     // .limit(5)
-    .populate("note")
+    .populate("notes")
     .then(function(dbArticle) {
       // If any Articles are found, send them to the client
       res.json(dbArticle);
